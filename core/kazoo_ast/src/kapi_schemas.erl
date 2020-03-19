@@ -299,10 +299,17 @@ kapi_schema(#acc{app_schemas=Schemas
         Schema -> Schema
     end.
 
+-spec base_schema(kz_term:ne_binary(), kapi_definition:name()) -> kz_json:object().
 base_schema(<<KAPI/binary>>, <<API/binary>>) ->
     kz_json:from_list([{<<"_id">>, <<"kapi.", KAPI/binary, ".", API/binary>>}
                       ,{<<"$schema">>, <<"http://json-schema.org/draft-04/schema#">>}
                       ,{<<"description">>, <<"AMQP API for ", KAPI/binary, ".", API/binary>>}
+                      ,{<<"type">>, <<"object">>}
+                      ]);
+base_schema(<<KAPI/binary>>, _) ->
+    kz_json:from_list([{<<"_id">>, <<"kapi.", KAPI/binary>>}
+                      ,{<<"$schema">>, <<"http://json-schema.org/draft-04/schema#">>}
+                      ,{<<"description">>, <<"AMQP API for ", KAPI/binary>>}
                       ,{<<"type">>, <<"object">>}
                       ]).
 

@@ -44,6 +44,7 @@
 -export_type([api/0
              ,apis/0
              ,setter_funs/0
+             ,name/0
              ]).
 
 %%%=============================================================================
@@ -54,10 +55,10 @@
 %% @doc
 %% @end
 %%------------------------------------------------------------------------------
--spec name(api()) -> kz_term:ne_binary().
+-spec name(api()) -> name().
 name(#kapi_definition{name = Name}) -> Name.
 
--spec set_name(api(), kz_term:ne_binary()) -> api().
+-spec set_name(api(), name()) -> api().
 set_name(API, Name) -> API#kapi_definition{name = Name}.
 
 %%------------------------------------------------------------------------------

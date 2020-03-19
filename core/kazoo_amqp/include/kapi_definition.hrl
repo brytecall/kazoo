@@ -1,7 +1,9 @@
 -ifndef(KAPI_DEFINITION_HRL).
--type binding() :: kz_term:api_ne_binary() | fun((...) -> kz_term:ne_binary()).
 
--record(kapi_definition, {name :: kz_term:api_ne_binary()
+-type binding() :: kz_term:api_ne_binary() | fun((...) -> kz_term:ne_binary()).
+-type name() :: kz_term:ne_binary() | fun((kz_term:proplist()) -> kz_term:ne_binary()).
+
+-record(kapi_definition, {name :: name()
                          ,friendly_name :: kz_term:api_ne_binary()
                          ,description :: kz_term:api_ne_binary()
                          ,category = 'undefined' :: kz_term:api_ne_binary()
