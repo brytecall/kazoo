@@ -1,6 +1,9 @@
 %%%-----------------------------------------------------------------------------
 %%% @copyright (C) 2010-2020, 2600Hz
-%%% @doc
+%%% @doc This Source Code Form is subject to the terms of the Mozilla Public
+%%% License, v. 2.0. If a copy of the MPL was not distributed with this
+%%% file, You can obtain one at https://mozilla.org/MPL/2.0/.
+%%%
 %%% @end
 %%%-----------------------------------------------------------------------------
 -module(kz_im_offnet_sup).
@@ -29,13 +32,12 @@
 %%------------------------------------------------------------------------------
 -spec worker() -> {'error', 'no_connections'} | pid().
 worker() ->
-    Listeners = supervisor:which_children(?SERVER),
-    case length(Listeners) of
+    Pids = gproc:lookup_pids({'p', 'l', 'im_offnet'}),
+    case length(Pids) of
         0 -> {'error', 'no_connections'};
         Size ->
             Selected = rand:uniform(Size),
-            {_, Pid, _, _} = lists:nth(Selected, Listeners),
-            Pid
+            lists:nth(Selected, Pids)
     end.
 
 %%------------------------------------------------------------------------------

@@ -22,7 +22,6 @@
         ,cdr_srv/1
         ,conference_srv/1
         ,event_stream_sup/1
-        ,msg_srv/1
         ]).
 
 -export([init/1]).
@@ -33,6 +32,7 @@
 -define(NODE_WORKER, ?NODE_CHILD_TYPE(<<"worker">>)).
 -define(NODE_SUPERVISOR, ?NODE_CHILD_TYPE(<<"supervisor">>)).
 
+-define(DEPRECATED_MODS, [<<"msg">>]).
 %%==============================================================================
 %% API functions
 %%==============================================================================
@@ -93,10 +93,6 @@ conference_srv(Supervisor) ->
 event_stream_sup(Supervisor) ->
     srv(which_children(Supervisor), "pus_maerts_tneve_").
 
--spec msg_srv(pid()) -> kz_term:api_pid().
-msg_srv(Supervisor) ->
-    srv(which_children(Supervisor), "gsm_").
-
 %%==============================================================================
 %% Supervisor callbacks
 %%==============================================================================
@@ -118,7 +114,7 @@ init([Node, Options]) ->
 
     NodeB = kz_term:to_binary(Node),
     Args = [Node, Options],
-    M = kazoo_bindings:map(<<"freeswitch.node.modules">>, []),
+    M = kazoo_bindings:map(<<"freeswitch.node.modules">>, []) -- ?DEPRECATED_MODS,
     Modules = lists:foldl(fun(A, B) -> A ++ B end, [], M),
     JObj = maybe_correct_modules(Modules),
     Children = kz_json:foldr(fun(Module, V, Acc) ->

@@ -404,10 +404,6 @@
                            ,'spandsp::txfaxnegociateresult'
                            ,'spandsp::rxfaxnegociateresult'
                            ]
-                          ,['KZ::DELIVERY_REPORT'
-                           ,'SMS::DELIVERY_REPORT'
-                           ,'KZ::MESSAGE'
-                           ]
                           ,'loopback::bowout'
                           ]).
 
@@ -557,7 +553,6 @@
         ,<<"authn">>
         ,<<"channel">>
         ,<<"conference">>
-        ,<<"msg">>
         ,<<"notify">>
         ,<<"recordings">>
         ,<<"resource">>
